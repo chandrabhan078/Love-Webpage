@@ -10,7 +10,6 @@
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
-    html, body { height: 100%; overflow-x: hidden; }
 
     body {
       width: 100%; min-height: 100vh;
@@ -18,10 +17,8 @@
       background: linear-gradient(120deg, #ff9ad5, #ffc0e9, #ff8ac5);
       background-size: 200% 200%;
       animation: bgShift 12s ease-in-out infinite;
-      /* allow vertical scrolling on very small screens */
-      overflow-y: auto;
+      overflow: hidden;
       position: relative;
-      padding: 3rem 1rem; /* spacing for small devices */
     }
 
     @keyframes bgShift {
@@ -37,9 +34,6 @@
       animation: moveGlow 20s linear infinite alternate;
       pointer-events: none;
       z-index: 1;
-      will-change: transform, opacity;
-      /* prevent glows from creating horizontal overflow */
-      left: auto; right: auto; top: auto; bottom: auto;
     }
     @keyframes moveGlow {
       0% { transform: translate(-10vw, 10vh); }
@@ -49,84 +43,82 @@
     /* --- PLAYER CONTAINER --- */
     .container {
       position: relative; z-index: 10;
-      background: rgba(255, 255, 255, 0.95);
-      width: 380px;
-      max-width: 100%; /* Mobile safe */
+      background: rgba(255, 255, 255, 0.85);
+      width: 350px;
+      max-width: 90%; /* Mobile safe */
       padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+      border-radius: 25px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
       text-align: center;
       backdrop-filter: blur(5px);
-      margin: 0 auto;
     }
 
     /* --- ALBUM ART --- */
     .img-area {
-      width: 100%; height: 0; padding-bottom: 65%; /* maintain aspect ratio responsively */
-      border-radius: 14px;
+      width: 100%; height: 260px;
+      border-radius: 20px;
       overflow: hidden;
-      margin-bottom: 18px;
-      box-shadow: 0 10px 20px rgba(255, 79, 169, 0.12);
+      margin-bottom: 20px;
+      box-shadow: 0 10px 20px rgba(255, 79, 169, 0.2);
     }
     
     .img-area img {
       width: 100%; height: 100%;
       object-fit: cover;
-      transform-origin: center center;
       transition: transform 0.5s ease;
     }
     
     .container.playing .img-area img { transform: scale(1.05); }
 
     /* --- TEXT --- */
-    h1 { font-size: clamp(1rem, 3.6vw, 1.4rem); color: #333; font-weight: 600; margin-bottom: 6px; }
-    p { font-size: clamp(0.82rem, 2.6vw, 0.9rem); color: #ff4fa9; margin-bottom: 18px; }
+    h1 { font-size: 1.4rem; color: #333; font-weight: 600; margin-bottom: 5px; }
+    p { font-size: 0.9rem; color: #ff4fa9; margin-bottom: 20px; }
 
     /* --- PROGRESS BAR --- */
     .progress-area {
-      height: 8px; width: 100%;
-      background: #f6f6f6;
+      height: 6px; width: 100%;
+      background: #f0f0f0;
       border-radius: 50px;
-      cursor: pointer; margin-bottom: 20px;
-      position: relative; overflow: hidden;
+      cursor: pointer; margin-bottom: 25px;
+      position: relative;
     }
     .progress-bar {
       height: 100%; width: 0%;
-      background: linear-gradient(90deg,#ff7eb3,#ff4fa9);
+      background: #ff4fa9;
       border-radius: 50px;
       position: relative;
-      transition: width 0.08s linear;
+      transition: width 0.1s linear;
     }
     .progress-bar::before {
       content: ""; position: absolute;
-      height: 14px; width: 14px;
+      height: 12px; width: 12px;
       border-radius: 50%;
       background: #ff4fa9;
-      right: -7px; top: 50%; transform: translateY(-50%) scale(0); transition: transform 0.2s;
+      right: -6px; top: -3px;
+      transform: scale(0); transition: transform 0.2s;
     }
-    .progress-area:hover .progress-bar::before { transform: translateY(-50%) scale(1.05); }
+    .progress-area:hover .progress-bar::before { transform: scale(1.2); }
 
     /* --- CONTROLS --- */
     .controls {
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 18px;
+      margin-bottom: 25px;
     }
-    .btn-icon { color: #777; font-size: 1.2rem; cursor: pointer; transition: 0.25s; }
+    .btn-icon { color: #999; font-size: 1.3rem; cursor: pointer; transition: 0.3s; }
     .btn-icon:hover { color: #ff4fa9; }
 
     .play-pause {
-      width: 56px; height: 56px;
+      width: 60px; height: 60px;
       background: linear-gradient(to right, #ff4fa9, #ff7eb3);
       border-radius: 50%;
       display: flex; justify-content: center; align-items: center;
       color: white;
-      font-size: 1.6rem;
-      box-shadow: 0 8px 18px rgba(255, 79, 169, 0.25);
+      font-size: 1.8rem;
+      box-shadow: 0 8px 15px rgba(255, 79, 169, 0.3);
       cursor: pointer;
-      transition: transform 0.16s;
-      flex-shrink: 0;
+      transition: transform 0.2s;
     }
-    .play-pause:active { transform: scale(0.94); }
+    .play-pause:active { transform: scale(0.9); }
 
     /* --- NEXT BUTTON --- */
     .next-btn {
@@ -137,11 +129,14 @@
       font-size: 0.95rem;
       border: 2px solid #ffeff7;
       background: #ffeff7;
-      padding: 8px 18px;
-      border-radius: 28px;
-      transition: 0.25s;
+      padding: 10px 25px;
+      border-radius: 30px;
+      transition: 0.3s;
     }
-    .next-btn:hover { background: #ff4fa9; color: white; border-color: #ff4fa9; }
+    .next-btn:hover {
+      background: #ff4fa9; color: white;
+      border-color: #ff4fa9;
+    }
 
     /* --- ANIMATION STYLES --- */
     #rain-container {
@@ -153,13 +148,13 @@
 
     .falling-emoji {
       position: absolute; top: -50px;
-      font-size: 20px; opacity: 0.9;
+      font-size: 24px; opacity: 0.8;
       animation: fall linear forwards, sway ease-in-out infinite alternate;
-      will-change: transform, top, opacity;
     }
 
     /* Beat Effect Logic */
     .beating {
+      /* Uses CSS var to keep random duration intact while adding heartbeat */
       animation: fall var(--fall-duration) linear forwards, 
                  sway 2s ease-in-out infinite alternate, 
                  heartbeat 0.8s infinite !important;
@@ -172,54 +167,52 @@
       100% { top: 110vh; opacity: 0; }
     }
 
-    @keyframes sway { 0% { transform: translateX(-12px) rotate(-8deg); } 100% { transform: translateX(12px) rotate(8deg); } }
-
-    @keyframes heartbeat { 0% { transform: scale(1); } 25% { transform: scale(1.25); } 50% { transform: scale(1); } 75% { transform: scale(1.25); } 100% { transform: scale(1); } }
-
-    /* small devices tweaks */
-    @media (max-width: 420px) {
-      .container { padding: 20px; border-radius: 16px; }
-      .img-area { padding-bottom: 62%; }
-      .controls { gap: 6px; }
-      .play-pause { width: 50px; height: 50px; font-size: 1.4rem; }
-      .progress-area { height: 6px; }
+    @keyframes sway {
+      0% { transform: translateX(-20px) rotate(-10deg); }
+      100% { transform: translateX(20px) rotate(10deg); }
     }
 
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      25% { transform: scale(1.3); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Positioned glows set to left/top via transforms to avoid overflow -->
-  <div class="glow" style="width:260px;height:260px;background:#ff5da8; transform: translate(-8vw, 8vh); left: 0; top: 0;"></div>
-  <div class="glow" style="width:220px;height:220px;background:#ffd1ff; transform: translate(45vw, 60vh); right: 0; bottom: 0;"></div>
+  <div class="glow" style="width:260px;height:260px;background:#ff5da8; top:10%; left:10%;"></div>
+  <div class="glow" style="width:220px;height:220px;background:#ffd1ff; bottom:10%; right:10%;"></div>
 
-  <div id="rain-container" aria-hidden="true"></div>
+  <div id="rain-container"></div>
 
-  <div class="container" id="playerBox" role="region" aria-label="Music player">
+  <div class="container" id="playerBox">
     
     <div class="img-area">
-      <img src="img1.jpg" alt="Our Photo" id="albumImg">
+      <img src="img1.jpg" alt="Our Photo">
     </div>
 
     <h1>Sirf tere liye 🎵</h1>
     <p>Bas feel kar ❤️</p>
 
-    <audio id="main-audio" src="song.mp3" preload="metadata"></audio>
+    <audio id="main-audio" src="song.mp3"></audio>
 
-    <div class="progress-area" id="progressArea" aria-label="Progress bar" role="slider" tabindex="0">
+    <div class="progress-area" id="progressArea">
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
     <div class="controls">
-      <i class="ri-heart-line btn-icon" title="Like" role="button" tabindex="0"></i>
-      <i class="ri-skip-back-fill btn-icon" title="Previous" role="button" tabindex="0"></i>
+      <i class="ri-heart-line btn-icon"></i>
+      <i class="ri-skip-back-fill btn-icon"></i>
       
-      <div class="play-pause" onclick="togglePlay()" role="button" aria-pressed="false" id="playBtn">
-        <i class="ri-play-fill" id="playIcon" aria-hidden="true"></i>
+      <div class="play-pause" onclick="togglePlay()">
+        <i class="ri-play-fill" id="playIcon"></i>
       </div>
 
-      <i class="ri-skip-forward-fill btn-icon" title="Next" role="button" tabindex="0"></i>
-      <i class="ri-repeat-2-line btn-icon" title="Repeat" role="button" tabindex="0"></i>
+      <i class="ri-skip-forward-fill btn-icon"></i>
+      <i class="ri-repeat-2-line btn-icon"></i>
     </div>
 
     <a href="gallery.html" class="next-btn">Agla page wait kr ra pgli🥺</a>
@@ -233,7 +226,6 @@
     const progressBar = document.getElementById("progressBar");
     const progressArea = document.getElementById("progressArea");
     const rainContainer = document.getElementById("rain-container");
-    const playBtn = document.getElementById('playBtn');
 
     let isPlaying = false;
 
@@ -244,20 +236,15 @@
         wrapper.classList.remove("playing");
         playIcon.classList.remove("ri-pause-fill");
         playIcon.classList.add("ri-play-fill");
-        playBtn.setAttribute('aria-pressed', 'false');
         isPlaying = false;
         stopBeatEffect();
       } else {
-        audio.play().catch(()=>{
-          // autoplay may be blocked on some browsers; toggle state visually only if play succeeds
-        }).then(()=>{
-          wrapper.classList.add("playing");
-          playIcon.classList.remove("ri-play-fill");
-          playIcon.classList.add("ri-pause-fill");
-          playBtn.setAttribute('aria-pressed', 'true');
-          isPlaying = true;
-          startBeatEffect();
-        });
+        audio.play();
+        wrapper.classList.add("playing");
+        playIcon.classList.remove("ri-play-fill");
+        playIcon.classList.add("ri-pause-fill");
+        isPlaying = true;
+        startBeatEffect();
       }
     }
 
@@ -272,89 +259,51 @@
     });
 
     progressArea.addEventListener("click", (e) => {
-      const rect = progressArea.getBoundingClientRect();
-      let clickedOffsetX = e.clientX - rect.left;
+      let progressWidth = progressArea.clientWidth;
+      let clickedOffsetX = e.offsetX;
       let songDuration = audio.duration;
-      if(songDuration) {
-        audio.currentTime = (clickedOffsetX / rect.width) * songDuration;
-        if(!isPlaying) togglePlay();
-      }
+      audio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
+      if(!isPlaying) togglePlay();
     });
 
-    // keyboard support for progress (left/right to skip)
-    progressArea.addEventListener('keydown', (e) => {
-      if(!audio.duration) return;
-      if(e.key === 'ArrowRight') {
-        audio.currentTime = Math.min(audio.currentTime + 5, audio.duration);
-      } else if(e.key === 'ArrowLeft') {
-        audio.currentTime = Math.max(audio.currentTime - 5, 0);
-      }
-    });
-
-    // --- 3. Romantic Rain & Beat Animation (optimized) ---
+    // --- 3. Romantic Rain & Beat Animation ---
     const emojis = ["❤️", "💖", "🌸", "🌹", "😍", "✨", "🍫", "🍬", "🦋", "🎶"];
-    let dropInterval = 450; // slightly slower to save CPU on phones
-    let maxDrops = 18; // cap number of active drops
 
     function createRainDrop() {
-      if (!isPlaying) return; // spawn only while playing
-      if (rainContainer.children.length > maxDrops) return; // limit
-
       const drop = document.createElement("div");
       drop.classList.add("falling-emoji");
       drop.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      
       drop.style.left = Math.random() * 100 + "vw";
-      const size = Math.random() * 18 + 14;
+      const size = Math.random() * 20 + 15; 
       drop.style.fontSize = size + "px";
-      const duration = Math.random() * 3 + 2;
+      
+      const duration = Math.random() * 3 + 2; 
+      // Set CSS variable for random duration (used in CSS)
       drop.style.setProperty('--fall-duration', duration + 's');
-      drop.style.animationDuration = duration + 's';
-
-      // occasionally add beating class for pulse
-      if (Math.random() < 0.25) drop.classList.add('beating');
+      
+      if(isPlaying) {
+        drop.classList.add("beating");
+      }
 
       rainContainer.appendChild(drop);
 
       setTimeout(() => {
         drop.remove();
-      }, duration * 1000 + 300);
+      }, duration * 1000);
     }
 
-    let rainTimer = null;
-    function startRain() {
-      if (rainTimer) return;
-      rainTimer = setInterval(createRainDrop, dropInterval);
-    }
-    function stopRain() {
-      clearInterval(rainTimer); rainTimer = null;
-      // remove remaining
-      Array.from(rainContainer.children).forEach(ch => ch.remove());
-    }
+    setInterval(createRainDrop, 300);
 
     function startBeatEffect() {
-      startRain();
       const existingDrops = document.querySelectorAll('.falling-emoji');
       existingDrops.forEach(drop => drop.classList.add("beating"));
     }
 
     function stopBeatEffect() {
-      stopRain();
       const existingDrops = document.querySelectorAll('.falling-emoji');
       existingDrops.forEach(drop => drop.classList.remove("beating"));
     }
-
-    // Pause rain when page hidden to save battery
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        stopRain();
-      } else if (isPlaying) {
-        startRain();
-      }
-    });
-
-    // ensure audio.pause on navigation away
-    window.addEventListener('pagehide', () => { audio.pause(); stopRain(); });
-
   </script>
 
 </body>
