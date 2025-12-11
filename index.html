@@ -2,25 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Oye Pgli – Name Page</title>
 
   <style>
+    :root{
+      --pink-1: #ffe6f3;
+      --pink-2: #ffb6e1;
+      --pink-3: #ff8ac5;
+      --accent: #ff5da8;
+      --accent-2: #ff2b85;
+      --card-bg: #fff;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html, body {
+      height: 100%;
     }
 
     body {
       min-height: 100vh;
-      background: radial-gradient(circle at top, #ffe6f3 0, #ffb6e1 35%, #ff8ac5 100%);
+      background: radial-gradient(circle at top, var(--pink-1) 0, var(--pink-2) 35%, var(--pink-3) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
       position: relative;
+      padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
     }
 
     /* BG EFFECTS (flowers + hearts) */
@@ -33,155 +49,132 @@
     }
     .bg-effects span {
       position: absolute;
-      font-size: 24px;
+      font-size: clamp(14px, 4vw, 24px);
       opacity: 0;
       animation-fill-mode: forwards;
+      will-change: transform, opacity;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
     }
 
     @keyframes floatUp {
-      0% {
-        transform: translateY(40px);
-        opacity: 0;
-      }
-      20% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-140vh);
-        opacity: 0;
-      }
+      0% { transform: translateY(40px); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-140vh); opacity: 0; }
     }
 
     @keyframes popSideLeft {
-      0% {
-        transform: translateX(-40px) translateY(0);
-        opacity: 0;
-      }
-      15% {
-        opacity: 1;
-      }
-      50% {
-        transform: translateX(40vw) translateY(-20vh);
-      }
-      100% {
-        transform: translateX(80vw) translateY(40vh);
-        opacity: 0;
-      }
+      0% { transform: translateX(-40px) translateY(0); opacity: 0; }
+      15% { opacity: 1; }
+      50% { transform: translateX(40vw) translateY(-20vh); }
+      100% { transform: translateX(80vw) translateY(40vh); opacity: 0; }
     }
 
     @keyframes popSideRight {
-      0% {
-        transform: translateX(40px) translateY(0);
-        opacity: 0;
-      }
-      15% {
-        opacity: 1;
-      }
-      50% {
-        transform: translateX(-40vw) translateY(-30vh);
-      }
-      100% {
-        transform: translateX(-80vw) translateY(40vh);
-        opacity: 0;
-      }
+      0% { transform: translateX(40px) translateY(0); opacity: 0; }
+      15% { opacity: 1; }
+      50% { transform: translateX(-40vw) translateY(-30vh); }
+      100% { transform: translateX(-80vw) translateY(40vh); opacity: 0; }
     }
 
     .wrapper {
       text-align: center;
       position: relative;
       z-index: 1;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
     }
 
     .card {
-      background: #fff;
-      padding: 3rem 3.5rem 2.5rem;
-      border-radius: 32px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+      background: var(--card-bg);
+      padding: clamp(18px, 3.5vw, 40px);
+      border-radius: 24px;
+      box-shadow: 0 18px 46px rgba(0,0,0,0.14);
       position: relative;
-      max-width: 480px;
+      width: min(520px, 94vw);
+      max-width: 520px;
+      overflow: visible;
     }
 
-    /* BIG HEART (Dana & Ahmed style) */
+    /* BIG HEART (responsive) */
     .big-heart-wrapper {
       position: relative;
-      width: 280px;
-      height: 260px;
-      margin: 0 auto 1.8rem;
+      width: min(70vw, 280px);
+      height: calc(min(70vw, 280px) * 0.92);
+      margin: 0 auto 1.2rem;
     }
 
     .heart-outer {
       position: absolute;
       inset: 0;
       margin: auto;
-      width: 260px;
-      height: 230px;
+      width: 85%;
+      height: 80%;
       transform: rotate(-45deg);
-      background: #ff5da8;
+      background: var(--accent);
       border-radius: 60px;
       box-shadow:
-        0 20px 40px rgba(255, 60, 140, 0.5),
-        0 0 0 8px #ff85c4;
+        0 16px 32px rgba(255, 60, 140, 0.45),
+        0 0 0 6px #ff85c4;
     }
 
     .heart-outer::before,
     .heart-outer::after {
       content: "";
       position: absolute;
-      width: 260px;
-      height: 260px;
-      background: #ff5da8;
+      width: 100%;
+      height: 100%;
+      background: var(--accent);
       border-radius: 50%;
     }
 
-    .heart-outer::before {
-      top: -130px;
-      left: 0;
-    }
-    .heart-outer::after {
-      left: 130px;
-      top: 0;
-    }
+    .heart-outer::before { top: -48%; left: 0; transform: translateY(-8%); }
+    .heart-outer::after  { left: 48%; top: 0; transform: translateX(0%); }
 
     .heart-inner {
       position: absolute;
       inset: 0;
       margin: auto;
-      width: 220px;
-      height: 220px;
+      width: 76%;
+      height: 76%;
       transform: rotate(45deg);
-      background: #fff;
+      background: var(--card-bg);
       border-radius: 50%;
       box-shadow:
         0 0 0 8px #ffe4f4,
-        0 0 0 18px #ff5da8;
+        0 0 0 14px var(--accent);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
+      padding: 0.6rem;
       text-align: center;
     }
 
     .heart-top-text {
-      font-size: 1.2rem;
+      font-size: clamp(13px, 2.6vw, 18px);
       font-weight: 600;
-      color: #ff2b85;
-      margin-bottom: 0.25rem;
-    }
-    .heart-main-text {
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: #333;
+      color: var(--accent-2);
       margin-bottom: 0.15rem;
     }
+    .heart-main-text {
+      font-size: clamp(16px, 3.6vw, 22px);
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 0.06rem;
+    }
     .heart-sub-text {
-      font-size: 1.2rem;
+      font-size: clamp(12px, 2.4vw, 16px);
       font-weight: 500;
       color: #444;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.15rem;
     }
     .heart-emoji {
-      font-size: 1.5rem;
+      font-size: clamp(18px, 4vw, 28px);
     }
 
     .label-small {
@@ -192,68 +185,66 @@
 
     .flirty-text {
       min-height: 1.2em;
-      margin-top: 0.7rem;
-      font-size: 0.85rem;
-      color: #ff2b85;
+      margin-top: 0.6rem;
+      font-size: clamp(12px, 2.3vw, 15px);
+      color: var(--accent-2);
       font-weight: 500;
     }
 
     .move-zone {
       position: relative;
-      width: 270px;
-      height: 90px;
-      margin: 1.1rem auto 0.4rem;
+      width: min(88%, 270px);
+      height: 70px;
+      margin: 0.9rem auto 0.4rem;
       background: #ffe6f5;
-      border-radius: 20px;
+      border-radius: 18px;
       overflow: hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 8px;
     }
 
     .name-input {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 0.75rem 1.2rem;
+      padding: 12px 14px;
       border-radius: 999px;
       border: none;
       outline: none;
-      width: 75%;
-      font-size: 0.95rem;
+      width: 88%;
+      max-width: 420px;
+      font-size: clamp(14px, 2.4vw, 16px);
       font-weight: 500;
       background: #ffffff;
       box-shadow: 0 0 0 2px #ff8ccc;
       cursor: pointer;
-      transition: top 0.22s ease-out, left 0.22s ease-out,
-        background-color 0.22s ease-out, box-shadow 0.22s ease-out,
-        transform 0.22s ease-out;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+      text-align: center;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+
+    .name-input:focus {
+      box-shadow: 0 0 0 3px #ff5ca8, 0 10px 18px rgba(0,0,0,0.12);
+      transform: translateY(-2px);
     }
 
     .hint {
-      margin-top: 0.2rem;
-      font-size: 0.8rem;
+      margin-top: 0.35rem;
+      font-size: clamp(11px, 2vw, 13px);
       color: #777;
     }
 
-    @media (max-width: 520px) {
-      .card {
-        padding: 2.4rem 1.6rem 2rem;
-      }
-      .big-heart-wrapper {
-        width: 240px;
-        height: 230px;
-      }
-      .heart-outer {
-        width: 230px;
-        height: 205px;
-      }
-      .heart-inner {
-        width: 200px;
-        height: 200px;
-      }
-      .move-zone {
-        width: 235px;
-      }
+    /* smaller screens adjustments */
+    @media (max-width: 420px) {
+      .move-zone { height: 64px; border-radius: 14px; }
+      .card { padding: 14px; border-radius: 18px; box-shadow: 0 12px 30px rgba(0,0,0,0.12);}
+      .big-heart-wrapper { margin-bottom: 10px; }
+      .flirty-text { margin-top: 8px; }
     }
+
+    /* prevent weird zoom on input on some mobile browsers */
+    input[type="text"] { font-size: 16px; }
+
   </style>
 </head>
 <body>
@@ -262,7 +253,7 @@
 
   <div class="wrapper">
     <div class="card">
-      <div class="big-heart-wrapper">
+      <div class="big-heart-wrapper" aria-hidden="true">
         <div class="heart-outer"></div>
         <div class="heart-inner">
           <div class="heart-top-text">Oye pgli</div>
@@ -272,10 +263,6 @@
         </div>
       </div>
 
-      <!-- <p class="label-small">
-       Sirf ek hi naam valid hai😉
-      </p> -->
-
       <div class="flirty-text" id="flirtyText"></div>
 
       <div class="move-zone">
@@ -284,6 +271,8 @@
           id="nameInput"
           class="name-input"
           placeholder="Yahan naam likhna tha..."
+          autocomplete="off"
+          inputmode="text"
         />
       </div>
 
@@ -326,19 +315,25 @@
     }
 
     function moveInputOnce() {
+      // small random offsets for mobile-friendly positioning
       const pos = positions[moveCount % positions.length];
-      input.style.top = pos.top + "%";
-      input.style.left = pos.left + "%";
+      // use percent positions but cap them so input stays visible on small screens
+      const top = Math.max(12, Math.min(78, pos.top));
+      const left = Math.max(12, Math.min(88, pos.left));
+      input.style.position = "relative";
+      input.style.top = top + "%";
+      input.style.left = left + "%";
       input.style.transform =
         "translate(-50%, -50%) rotate(" + (Math.random() * 10 - 5) + "deg)";
 
       const color = colors[Math.floor(Math.random() * colors.length)];
       input.style.backgroundColor = color;
       input.style.boxShadow =
-        "0 0 0 2px #ff5ca8, 0 12px 22px rgba(0,0,0,0.15)";
+        "0 0 0 2px #ff5ca8, 0 12px 22px rgba(0,0,0,0.12)";
     }
 
     function resetInput() {
+      input.style.position = "";
       input.style.top = "50%";
       input.style.left = "50%";
       input.style.transform = "translate(-50%, -50%)";
@@ -354,44 +349,40 @@
     }
 
     function spawnBgEmojis() {
-      const count = 4 + Math.floor(Math.random() * 4);
+      const count = 3 + Math.floor(Math.random() * 3);
       for (let i = 0; i < count; i++) {
         const span = document.createElement("span");
         span.textContent =
           emojiSet[Math.floor(Math.random() * emojiSet.length)];
 
-        // random start position
         const side = Math.random();
         if (side < 0.33) {
-          // bottom to top
           span.style.left = Math.random() * 100 + "vw";
           span.style.bottom = "-40px";
           span.style.animationName = "floatUp";
         } else if (side < 0.66) {
-          // left to right-ish
           span.style.left = "-40px";
           span.style.top = Math.random() * 100 + "vh";
           span.style.animationName = "popSideLeft";
         } else {
-          // right to left-ish
           span.style.right = "-40px";
           span.style.top = Math.random() * 100 + "vh";
           span.style.animationName = "popSideRight";
         }
 
-        const duration = 5 + Math.random() * 4;
+        const duration = 4 + Math.random() * 3;
         span.style.animationDuration = duration + "s";
 
         bgEffects.appendChild(span);
 
-        // cleanup
-        setTimeout(() => span.remove(), duration * 1000);
+        setTimeout(() => span.remove(), duration * 1000 + 200);
       }
     }
 
     function teaseHandler(e) {
       if (allowTyping) return;
 
+      // prevent mobile keyboard spam while teasing
       if (e.type === "keydown" || e.type === "input") {
         e.preventDefault();
       }
@@ -409,6 +400,7 @@
     }
 
     input.addEventListener("focus", teaseHandler);
+    input.addEventListener("touchstart", teaseHandler, { passive: true });
     input.addEventListener("mousedown", teaseHandler);
     input.addEventListener("keydown", teaseHandler);
     input.addEventListener("input", teaseHandler);
@@ -418,9 +410,11 @@
       if (!allowTyping) return;
       const value = e.target.value.trim().toLowerCase();
       if (value === "mikkuu") {
+        // open love.html in same directory
         window.location.href = "love.html";
       }
     });
   </script>
 </body>
 </html>
+
