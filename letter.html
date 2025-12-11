@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cute Kawaii Letter</title>
+  <style>
+    :root{
+      --bg-1: #ffdff4;
+      --bg-2: #ffc0e9;
+      --bg-3: #ff93c9;
+      --env-color: #dba4f7;
+      --env-dark: #c68ee3;
+      --flap-color: #000;
+      --heart-size: 24px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0;font-family:"Poppins","Comic Sans MS",system-ui,sans-serif}
+    html,body{height:100%}
+
+    body{
+      display:flex;align-items:center;justify-content:center;
+      min-height:100vh;overflow:hidden;
+      background: radial-gradient(circle at 10% 10%,var(--bg-1)0%,transparent 15%),
+                  radial-gradient(circle at 90% 80%,var(--bg-2)0%,transparent 18%),
+                  linear-gradient(180deg,var(--bg-1),var(--bg-2)45%,var(--bg-3)100%);
+    }
+
+    .glow-blob{
+      position:fixed;border-radius:50%;filter:blur(42px);
+      opacity:.7;pointer-events:none;z-index:1;mix-blend-mode:screen;
+    }
+    .glow-blob.one{
+      width:420px;height:420px;background:rgba(255,93,168,.12);
+      left:-80px;top:-60px;animation:moveA 16s infinite alternate;
+    }
+    .glow-blob.two{
+      width:360px;height:360px;background:rgba(255,193,233,.10);
+      right:-60px;bottom:-40px;animation:moveB 18s infinite alternate;
+    }
+
+    @keyframes moveA{0%{transform:translate(0,0)}100%{transform:translate(24px,-40px)}}
+    @keyframes moveB{0%{transform:translate(0,0)}100%{transform:translate(-30px,30px)}}
+
+    .card{
+      z-index:10;width:90%;max-width:480px;background:rgba(255,255,255,.95);
+      padding:50px 20px;border-radius:20px;text-align:center;
+      box-shadow:0 20px 50px rgba(0,0,0,.15);
+    }
+    .card h1{color:#ff2a7d;font-size:22px;margin-bottom:10px;}
+    .card p{color:#777;margin-bottom:20px;font-size:14px;}
+
+    .envelope-wrapper{
+      width:320px;height:220px;margin:auto;cursor:pointer;position:relative;
+    }
+
+    .envelope{
+      width:100%;height:100%;position:relative;
+      background:var(--env-dark);border-radius:12px;border:4px solid #000;
+      box-shadow:0 10px 25px rgba(0,0,0,.2);
+    }
+
+    .flap{
+      position:absolute;top:-4px;left:-4px;width:0;height:0;
+      border-left:164px solid transparent;
+      border-right:164px solid transparent;
+      border-top:130px solid #000;
+      border-radius:12px;transform-origin:top;
+      transition:.6s;z-index:20;
+    }
+
+    .pocket{
+      position:absolute;bottom:0;width:100%;height:100%;
+      background:var(--env-color);
+      clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%);
+      border-radius:0 0 8px 8px;z-index:15;
+    }
+
+    .face{
+      position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+      display:flex;gap:35px;z-index:16;
+    }
+    .eye{
+      width:38px;height:42px;background:#000;border-radius:50%;position:relative;
+    }
+    .eye:before{
+      content:'';position:absolute;top:8px;left:8px;width:14px;height:14px;background:#fff;border-radius:50%;
+    }
+    .eye:after{
+      content:'';position:absolute;bottom:8px;right:8px;width:6px;height:6px;background:white;border-radius:50%;
+    }
+    .mouth{
+      position:absolute;top:22px;width:18px;height:10px;border-bottom:3px solid #000;border-radius:50%;
+    }
+    .cheek{
+      position:absolute;top:18px;width:30px;height:20px;background:#ff9ec6;border-radius:50%;opacity:.8;
+    }
+    .cheek.left{left:-38px;}
+    .cheek.right{right:-38px;}
+
+    .letter{
+      position:absolute;bottom:5px;left:15px;width:290px;height:90%;
+      background:#FFB7CE;border-radius:8px;padding:20px;border:1px solid #413f3f;
+      text-align:center;z-index:5;
+      transition:.8s .4s cubic-bezier(.15,1.4,.5,1);
+      box-shadow:0 -5px 10px rgba(0,0,0,.05);
+    }
+
+    .letter-content{max-height:100%;overflow-y:auto;}
+    .letter-content::-webkit-scrollbar{width:4px;}
+    .letter-content::-webkit-scrollbar-thumb{background:#ffc0e9;border-radius:4px;}
+
+    .envelope-wrapper.open .flap{transform:rotateX(180deg);z-index:1;}
+    .envelope-wrapper.open .letter{transform:translateY(-140px);}
+
+    /* NEXT BUTTON */
+    .next-btn{
+      display:none;
+      margin-top:25px;
+      padding:12px 28px;
+      background:#ff2a7d;
+      color:white;
+      border-radius:50px;
+      border:none;
+      font-size:15px;
+      cursor:pointer;
+      box-shadow:0 8px 20px rgba(255,0,90,0.3);
+      transition:.3s;
+    }
+    .next-btn:hover{transform:translateY(-3px);}
+
+    /* HEARTS */
+    .spawn-heart{position:fixed;pointer-events:none;z-index:2;animation:floatUp linear forwards;}
+    @keyframes floatUp{
+      0%{transform:translateY(0) scale(.7);opacity:0;}
+      100%{transform:translateY(-90vh) scale(1.3);opacity:0;}
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="glow-blob one"></div>
+  <div class="glow-blob two"></div>
+
+  <div class="card">
+    <h1>Ek chhota sa letter…</h1>
+    <p>Bas halka sa touch karo malkin ❤️</p>
+
+    <div class="envelope-wrapper" id="env" onclick="openLetter()">
+      <div class="envelope">
+
+        <div class="letter">
+          <div class="letter-content">
+            <h3>Hay Mikkuu 💖</h3>
+            <p>Nothing nothing nothing nothing</p>
+            <p>Kya socha tha? Mai hamesha letter hi likhunga? 😂</p>
+            <p>Par kya karu… itni sundar ladki h, kuch likhe bina rah skta hu kyaa 🫢✨</p>
+            <p>Baby you light up my world like nobody else
+The way that you flip your hair gets me overwhelmed
+But you when smile at the ground it ain’t hard to tell
+You don’t know
+You don’t know you’re beautiful</p>
+<p style="margin:10px 0;font-weight:bold;color:#ff2a7d;font-size:16px;">I Hate youuu !</p>
+          </div>
+        </div>
+
+        <div class="pocket">
+          <div class="face">
+            <div class="cheek left"></div>
+            <div class="eye"></div>
+            <div class="mouth"></div>
+            <div class="eye"></div>
+            <div class="cheek right"></div>
+          </div>
+        </div>
+
+        <div class="flap"></div>
+      </div>
+    </div>
+
+    <!-- ⭐ NEW NEXT BUTTON ⭐ -->
+    <button class="next-btn" id="nextBtn" onclick="goNext()">Ready for Narak? Click here 😈✨</button>
+
+  </div>
+
+  <script>
+    function openLetter(){
+      const wrap = document.getElementById('env');
+      wrap.classList.toggle('open');
+
+      // Show NEXT button after opening
+      if(wrap.classList.contains('open')){
+        setTimeout(()=>{ 
+          document.getElementById('nextBtn').style.display = "inline-block"; 
+        }, 900);
+      }
+    }
+
+    function goNext(){
+      window.location.href = "thankyou.html";
+    }
+
+    // Hearts background
+    (function(){
+      const emojis = ['❤️','💖','💕','💗','🌸'];
+      setInterval(()=>{
+        const el = document.createElement("div");
+        el.className = "spawn-heart";
+        el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+        el.style.left = (Math.random()*100)+"vw";
+        el.style.bottom = "-20px";
+        el.style.fontSize = (20+Math.random()*20)+"px";
+        el.style.animationDuration = (4+Math.random()*4)+"s";
+        document.body.appendChild(el);
+        setTimeout(()=>el.remove(),8000);
+      },400);
+    })();
+  </script>
+
+</body>
+</html>

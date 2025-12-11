@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For My Radha Rani ❤️</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+
+    body {
+      width: 100%; min-height: 100vh;
+      display: flex; justify-content: center; align-items: center;
+      background: linear-gradient(120deg, #ff9ad5, #ffc0e9, #ff8ac5);
+      background-size: 200% 200%;
+      animation: bgShift 12s ease-in-out infinite;
+      overflow: hidden;
+      position: relative;
+    }
+
+    @keyframes bgShift {
+      0% { background-position: 0% 0%; }
+      50% { background-position: 100% 100%; }
+      100% { background-position: 0% 0%; }
+    }
+
+    /* --- Floating Background Blobs --- */
+    .glow {
+      position: fixed; border-radius: 50%;
+      filter: blur(35px); opacity: 0.5;
+      animation: moveGlow 20s linear infinite alternate;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes moveGlow {
+      0% { transform: translate(-10vw, 10vh); }
+      100% { transform: translate(90vw, 40vh); }
+    }
+
+    /* --- PLAYER CONTAINER --- */
+    .container {
+      position: relative; z-index: 10;
+      background: rgba(255, 255, 255, 0.85);
+      width: 350px;
+      max-width: 90%; /* Mobile safe */
+      padding: 30px;
+      border-radius: 25px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      backdrop-filter: blur(5px);
+    }
+
+    /* --- ALBUM ART --- */
+    .img-area {
+      width: 100%; height: 260px;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 20px rgba(255, 79, 169, 0.2);
+    }
+    
+    .img-area img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .container.playing .img-area img { transform: scale(1.05); }
+
+    /* --- TEXT --- */
+    h1 { font-size: 1.4rem; color: #333; font-weight: 600; margin-bottom: 5px; }
+    p { font-size: 0.9rem; color: #ff4fa9; margin-bottom: 20px; }
+
+    /* --- PROGRESS BAR --- */
+    .progress-area {
+      height: 6px; width: 100%;
+      background: #f0f0f0;
+      border-radius: 50px;
+      cursor: pointer; margin-bottom: 25px;
+      position: relative;
+    }
+    .progress-bar {
+      height: 100%; width: 0%;
+      background: #ff4fa9;
+      border-radius: 50px;
+      position: relative;
+      transition: width 0.1s linear;
+    }
+    .progress-bar::before {
+      content: ""; position: absolute;
+      height: 12px; width: 12px;
+      border-radius: 50%;
+      background: #ff4fa9;
+      right: -6px; top: -3px;
+      transform: scale(0); transition: transform 0.2s;
+    }
+    .progress-area:hover .progress-bar::before { transform: scale(1.2); }
+
+    /* --- CONTROLS --- */
+    .controls {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 25px;
+    }
+    .btn-icon { color: #999; font-size: 1.3rem; cursor: pointer; transition: 0.3s; }
+    .btn-icon:hover { color: #ff4fa9; }
+
+    .play-pause {
+      width: 60px; height: 60px;
+      background: linear-gradient(to right, #ff4fa9, #ff7eb3);
+      border-radius: 50%;
+      display: flex; justify-content: center; align-items: center;
+      color: white;
+      font-size: 1.8rem;
+      box-shadow: 0 8px 15px rgba(255, 79, 169, 0.3);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .play-pause:active { transform: scale(0.9); }
+
+    /* --- NEXT BUTTON --- */
+    .next-btn {
+      display: inline-block;
+      text-decoration: none;
+      color: #ff4fa9;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 2px solid #ffeff7;
+      background: #ffeff7;
+      padding: 10px 25px;
+      border-radius: 30px;
+      transition: 0.3s;
+    }
+    .next-btn:hover {
+      background: #ff4fa9; color: white;
+      border-color: #ff4fa9;
+    }
+
+    /* --- ANIMATION STYLES --- */
+    #rain-container {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 5;
+      overflow: hidden;
+    }
+
+    .falling-emoji {
+      position: absolute; top: -50px;
+      font-size: 24px; opacity: 0.8;
+      animation: fall linear forwards, sway ease-in-out infinite alternate;
+    }
+
+    /* Beat Effect Logic */
+    .beating {
+      /* Uses CSS var to keep random duration intact while adding heartbeat */
+      animation: fall var(--fall-duration) linear forwards, 
+                 sway 2s ease-in-out infinite alternate, 
+                 heartbeat 0.8s infinite !important;
+    }
+
+    @keyframes fall {
+      0% { top: -10vh; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { top: 110vh; opacity: 0; }
+    }
+
+    @keyframes sway {
+      0% { transform: translateX(-20px) rotate(-10deg); }
+      100% { transform: translateX(20px) rotate(10deg); }
+    }
+
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      25% { transform: scale(1.3); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow" style="width:260px;height:260px;background:#ff5da8; top:10%; left:10%;"></div>
+  <div class="glow" style="width:220px;height:220px;background:#ffd1ff; bottom:10%; right:10%;"></div>
+
+  <div id="rain-container"></div>
+
+  <div class="container" id="playerBox">
+    
+    <div class="img-area">
+      <img src="img1.jpg" alt="Our Photo">
+    </div>
+
+    <h1>Sirf tere liye 🎵</h1>
+    <p>Bas feel kar ❤️</p>
+
+    <audio id="main-audio" src="song.mp3"></audio>
+
+    <div class="progress-area" id="progressArea">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="controls">
+      <i class="ri-heart-line btn-icon"></i>
+      <i class="ri-skip-back-fill btn-icon"></i>
+      
+      <div class="play-pause" onclick="togglePlay()">
+        <i class="ri-play-fill" id="playIcon"></i>
+      </div>
+
+      <i class="ri-skip-forward-fill btn-icon"></i>
+      <i class="ri-repeat-2-line btn-icon"></i>
+    </div>
+
+    <a href="gallery.html" class="next-btn">Agla page wait kr ra pgli🥺</a>
+
+  </div>
+
+  <script>
+    const wrapper = document.getElementById("playerBox");
+    const audio = document.getElementById("main-audio");
+    const playIcon = document.getElementById("playIcon");
+    const progressBar = document.getElementById("progressBar");
+    const progressArea = document.getElementById("progressArea");
+    const rainContainer = document.getElementById("rain-container");
+
+    let isPlaying = false;
+
+    // --- 1. Play/Pause Logic ---
+    function togglePlay() {
+      if(isPlaying) {
+        audio.pause();
+        wrapper.classList.remove("playing");
+        playIcon.classList.remove("ri-pause-fill");
+        playIcon.classList.add("ri-play-fill");
+        isPlaying = false;
+        stopBeatEffect();
+      } else {
+        audio.play();
+        wrapper.classList.add("playing");
+        playIcon.classList.remove("ri-play-fill");
+        playIcon.classList.add("ri-pause-fill");
+        isPlaying = true;
+        startBeatEffect();
+      }
+    }
+
+    // --- 2. Progress Bar ---
+    audio.addEventListener("timeupdate", (e) => {
+      const currentTime = e.target.currentTime;
+      const duration = e.target.duration;
+      if(duration) {
+        let progressWidth = (currentTime / duration) * 100;
+        progressBar.style.width = `${progressWidth}%`;
+      }
+    });
+
+    progressArea.addEventListener("click", (e) => {
+      let progressWidth = progressArea.clientWidth;
+      let clickedOffsetX = e.offsetX;
+      let songDuration = audio.duration;
+      audio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
+      if(!isPlaying) togglePlay();
+    });
+
+    // --- 3. Romantic Rain & Beat Animation ---
+    const emojis = ["❤️", "💖", "🌸", "🌹", "😍", "✨", "🍫", "🍬", "🦋", "🎶"];
+
+    function createRainDrop() {
+      const drop = document.createElement("div");
+      drop.classList.add("falling-emoji");
+      drop.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      
+      drop.style.left = Math.random() * 100 + "vw";
+      const size = Math.random() * 20 + 15; 
+      drop.style.fontSize = size + "px";
+      
+      const duration = Math.random() * 3 + 2; 
+      // Set CSS variable for random duration (used in CSS)
+      drop.style.setProperty('--fall-duration', duration + 's');
+      
+      if(isPlaying) {
+        drop.classList.add("beating");
+      }
+
+      rainContainer.appendChild(drop);
+
+      setTimeout(() => {
+        drop.remove();
+      }, duration * 1000);
+    }
+
+    setInterval(createRainDrop, 300);
+
+    function startBeatEffect() {
+      const existingDrops = document.querySelectorAll('.falling-emoji');
+      existingDrops.forEach(drop => drop.classList.add("beating"));
+    }
+
+    function stopBeatEffect() {
+      const existingDrops = document.querySelectorAll('.falling-emoji');
+      existingDrops.forEach(drop => drop.classList.remove("beating"));
+    }
+  </script>
+
+</body>
+</html>

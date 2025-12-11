@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oye Pgli – Name Page</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #ffe6f3 0, #ffb6e1 35%, #ff8ac5 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* BG EFFECTS (flowers + hearts) */
+    .bg-effects {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bg-effects span {
+      position: absolute;
+      font-size: 24px;
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      20% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-140vh);
+        opacity: 0;
+      }
+    }
+
+    @keyframes popSideLeft {
+      0% {
+        transform: translateX(-40px) translateY(0);
+        opacity: 0;
+      }
+      15% {
+        opacity: 1;
+      }
+      50% {
+        transform: translateX(40vw) translateY(-20vh);
+      }
+      100% {
+        transform: translateX(80vw) translateY(40vh);
+        opacity: 0;
+      }
+    }
+
+    @keyframes popSideRight {
+      0% {
+        transform: translateX(40px) translateY(0);
+        opacity: 0;
+      }
+      15% {
+        opacity: 1;
+      }
+      50% {
+        transform: translateX(-40vw) translateY(-30vh);
+      }
+      100% {
+        transform: translateX(-80vw) translateY(40vh);
+        opacity: 0;
+      }
+    }
+
+    .wrapper {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: #fff;
+      padding: 3rem 3.5rem 2.5rem;
+      border-radius: 32px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+      position: relative;
+      max-width: 480px;
+    }
+
+    /* BIG HEART (Dana & Ahmed style) */
+    .big-heart-wrapper {
+      position: relative;
+      width: 280px;
+      height: 260px;
+      margin: 0 auto 1.8rem;
+    }
+
+    .heart-outer {
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 260px;
+      height: 230px;
+      transform: rotate(-45deg);
+      background: #ff5da8;
+      border-radius: 60px;
+      box-shadow:
+        0 20px 40px rgba(255, 60, 140, 0.5),
+        0 0 0 8px #ff85c4;
+    }
+
+    .heart-outer::before,
+    .heart-outer::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      background: #ff5da8;
+      border-radius: 50%;
+    }
+
+    .heart-outer::before {
+      top: -130px;
+      left: 0;
+    }
+    .heart-outer::after {
+      left: 130px;
+      top: 0;
+    }
+
+    .heart-inner {
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 220px;
+      height: 220px;
+      transform: rotate(45deg);
+      background: #fff;
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 8px #ffe4f4,
+        0 0 0 18px #ff5da8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .heart-top-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #ff2b85;
+      margin-bottom: 0.25rem;
+    }
+    .heart-main-text {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 0.15rem;
+    }
+    .heart-sub-text {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #444;
+      margin-bottom: 0.25rem;
+    }
+    .heart-emoji {
+      font-size: 1.5rem;
+    }
+
+    .label-small {
+      margin-top: 0.4rem;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .flirty-text {
+      min-height: 1.2em;
+      margin-top: 0.7rem;
+      font-size: 0.85rem;
+      color: #ff2b85;
+      font-weight: 500;
+    }
+
+    .move-zone {
+      position: relative;
+      width: 270px;
+      height: 90px;
+      margin: 1.1rem auto 0.4rem;
+      background: #ffe6f5;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .name-input {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 0.75rem 1.2rem;
+      border-radius: 999px;
+      border: none;
+      outline: none;
+      width: 75%;
+      font-size: 0.95rem;
+      font-weight: 500;
+      background: #ffffff;
+      box-shadow: 0 0 0 2px #ff8ccc;
+      cursor: pointer;
+      transition: top 0.22s ease-out, left 0.22s ease-out,
+        background-color 0.22s ease-out, box-shadow 0.22s ease-out,
+        transform 0.22s ease-out;
+    }
+
+    .hint {
+      margin-top: 0.2rem;
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    @media (max-width: 520px) {
+      .card {
+        padding: 2.4rem 1.6rem 2rem;
+      }
+      .big-heart-wrapper {
+        width: 240px;
+        height: 230px;
+      }
+      .heart-outer {
+        width: 230px;
+        height: 205px;
+      }
+      .heart-inner {
+        width: 200px;
+        height: 200px;
+      }
+      .move-zone {
+        width: 235px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- BG emoji effects -->
+  <div class="bg-effects" id="bgEffects"></div>
+
+  <div class="wrapper">
+    <div class="card">
+      <div class="big-heart-wrapper">
+        <div class="heart-outer"></div>
+        <div class="heart-inner">
+          <div class="heart-top-text">Oye pgli</div>
+          <div class="heart-main-text">apna naam</div>
+          <div class="heart-sub-text">daalna jra</div>
+          <div class="heart-emoji">💖</div>
+        </div>
+      </div>
+
+      <!-- <p class="label-small">
+       Sirf ek hi naam valid hai😉
+      </p> -->
+
+      <div class="flirty-text" id="flirtyText"></div>
+
+      <div class="move-zone">
+        <input
+          type="text"
+          id="nameInput"
+          class="name-input"
+          placeholder="Yahan naam likhna tha..."
+        />
+      </div>
+
+      <p class="hint">
+       Naam likhne ke paise nahi lagte, bas thoda sa pyaar lagta hai 💖                                                                                           
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById("nameInput");
+    const flirtyText = document.getElementById("flirtyText");
+    const bgEffects = document.getElementById("bgEffects");
+
+    const colors = ["#ffffff", "#ffe6ff", "#ffd1e8", "#ffe8cc", "#e5fffc"];
+    const positions = [
+      { top: 18, left: 20 },
+      { top: 65, left: 70 },
+      { top: 25, left: 75 },
+      { top: 70, left: 25 },
+      { top: 40, left: 10 }
+    ];
+
+    const flirtyLines = [
+      "Arey pgli, itna bhi kya sharmana? Naam toh bata de na… 😌❤️",
+      "Tu type karne aati hai, mera dil bhi tere saath hilne lagta hai 😚",
+      "Tera naam sunte hi dimag nahi, seedha dil active ho jata hai 💘",
+      "Tu bas naam likh de, baaki love story mai likh 😏",
+      "Itna mat sata na, pyaar se apna chhota sa naam likh de… 💖"
+    ];
+
+    const emojiSet = ["💖", "💘", "💕", "💗", "🌸", "💮", "🌹", "🌷", "💐"];
+
+    let moveCount = 0;
+    const maxMoves = 5;
+    let allowTyping = false;
+
+    function showFlirty(line) {
+      flirtyText.textContent = line;
+    }
+
+    function moveInputOnce() {
+      const pos = positions[moveCount % positions.length];
+      input.style.top = pos.top + "%";
+      input.style.left = pos.left + "%";
+      input.style.transform =
+        "translate(-50%, -50%) rotate(" + (Math.random() * 10 - 5) + "deg)";
+
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      input.style.backgroundColor = color;
+      input.style.boxShadow =
+        "0 0 0 2px #ff5ca8, 0 12px 22px rgba(0,0,0,0.15)";
+    }
+
+    function resetInput() {
+      input.style.top = "50%";
+      input.style.left = "50%";
+      input.style.transform = "translate(-50%, -50%)";
+      input.style.backgroundColor = "#ffffff";
+      input.style.boxShadow = "0 0 0 2px #ff8ccc";
+      input.placeholder = "Ab sach me apna naam likho…";
+      showFlirty(
+        "Achha baba sorry, ab pakka nahi bhaagunga. Likh de! 😘"
+      );
+      allowTyping = true;
+      input.focus();
+      input.style.cursor = "text";
+    }
+
+    function spawnBgEmojis() {
+      const count = 4 + Math.floor(Math.random() * 4);
+      for (let i = 0; i < count; i++) {
+        const span = document.createElement("span");
+        span.textContent =
+          emojiSet[Math.floor(Math.random() * emojiSet.length)];
+
+        // random start position
+        const side = Math.random();
+        if (side < 0.33) {
+          // bottom to top
+          span.style.left = Math.random() * 100 + "vw";
+          span.style.bottom = "-40px";
+          span.style.animationName = "floatUp";
+        } else if (side < 0.66) {
+          // left to right-ish
+          span.style.left = "-40px";
+          span.style.top = Math.random() * 100 + "vh";
+          span.style.animationName = "popSideLeft";
+        } else {
+          // right to left-ish
+          span.style.right = "-40px";
+          span.style.top = Math.random() * 100 + "vh";
+          span.style.animationName = "popSideRight";
+        }
+
+        const duration = 5 + Math.random() * 4;
+        span.style.animationDuration = duration + "s";
+
+        bgEffects.appendChild(span);
+
+        // cleanup
+        setTimeout(() => span.remove(), duration * 1000);
+      }
+    }
+
+    function teaseHandler(e) {
+      if (allowTyping) return;
+
+      if (e.type === "keydown" || e.type === "input") {
+        e.preventDefault();
+      }
+
+      if (moveCount < maxMoves) {
+        moveInputOnce();
+        showFlirty(flirtyLines[moveCount]);
+        spawnBgEmojis();
+        moveCount++;
+
+        if (moveCount === maxMoves) {
+          setTimeout(resetInput, 350);
+        }
+      }
+    }
+
+    input.addEventListener("focus", teaseHandler);
+    input.addEventListener("mousedown", teaseHandler);
+    input.addEventListener("keydown", teaseHandler);
+    input.addEventListener("input", teaseHandler);
+
+    // After teasing – allow typing & check Mikkuu
+    input.addEventListener("input", function (e) {
+      if (!allowTyping) return;
+      const value = e.target.value.trim().toLowerCase();
+      if (value === "mikkuu") {
+        window.location.href = "love.html";
+      }
+    });
+  </script>
+</body>
+</html>

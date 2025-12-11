@@ -1,0 +1,115 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", system-ui, sans-serif;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top, #ffb3d9 0, #ff4f7d 40%, #2c0014 100%);
+  overflow: hidden;
+  position: relative;
+}
+
+/* falling hearts layer */
+.heart-rain span {
+  position: fixed;
+  top: -10vh;
+  font-size: 20px;
+  animation: fall linear infinite;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) translateX(20px);
+    opacity: 0;
+  }
+}
+
+/* white card container (same on all pages) */
+.container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  gap: 20px;
+  max-width: 500px;
+  margin: 20px;
+  padding: 2.5rem 2rem;
+  background: #ffffffee;
+  border-radius: 30px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.container .tenor-gif-embed {
+  max-width: 220px;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+h1 {
+  font-size: 1.8rem;
+  color: #ff2965;
+}
+
+p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.container .btn {
+  display: flex;
+  gap: 25px;
+}
+
+.btn a {
+  text-decoration: none;
+  color: #111;
+  background: #fff;
+  padding: 10px 25px;
+  border-radius: 66px;
+  box-shadow: 0.5rem 1rem 3rem hsl(0, 0%, 0%, 0.3);
+  font-weight: 600;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    background 0.15s ease, color 0.15s ease;
+}
+
+.btn a:first-child {
+  background: #ff2965;
+  color: #fff;
+}
+
+.btn a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0.5rem 1rem 3.2rem hsl(0, 0%, 0%, 0.4);
+}
+
+#move-random {
+  position: relative;
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 2.1rem 1.3rem;
+  }
+
+  .container .btn {
+    flex-direction: column;
+  }
+}
