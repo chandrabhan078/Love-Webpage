@@ -467,6 +467,9 @@
 
       // Last slide logic
       if (current === slides.length - 1) {
+        nextButton.style.display = "block";
+        tapHint.textContent = "Ab aage badhiye ma'am 💌";
+      } else {
         nextButton.style.display = "none";
         tapHint.textContent = "Photo pe tap karo malkin 😌✨";
       }
@@ -535,4 +538,3 @@
 </body>
 
 </html>
-
